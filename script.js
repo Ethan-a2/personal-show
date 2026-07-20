@@ -12,8 +12,8 @@ const defaultMeta = {
   email: "coderleilei@163.com",
   github: "https://github.com/acmenlei",
   blog: "yueque.com/xiongleixin",
-  accent: "#790FAE",
-  text: "#555",
+  accent: "#6F4E37",
+  text: "#3E3A36",
   font: 'Nunito, Inter, "PingFang SC", "Microsoft YaHei", sans-serif',
   lineHeight: "22px",
 };
