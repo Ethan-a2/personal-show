@@ -31,6 +31,46 @@ http://localhost:8000
 
 不要直接双击打开 `index.html`，因为浏览器通常会限制本地文件读取，导致 `resume.md` 无法通过 `fetch` 加载。
 
+## GitHub Pages 发布
+
+当前项目是纯静态站点，最简单的发布方式是使用 GitHub Pages 的「Deploy from a branch」。
+
+推荐配置：
+
+- 仓库：`Ethan-a2/personal-show`
+- 分支：`main`
+- 目录：`/root`
+- 访问地址：`https://ethan-a2.github.io/personal-show/`
+
+本仓库需要保留 `.nojekyll` 文件，避免 GitHub Pages 用 Jekyll 处理 `resume.md`，否则可能导致 Pages 构建失败。
+
+如果还没有推送 `.nojekyll`，执行：
+
+```bash
+git add .nojekyll README.md
+git commit -m "Configure GitHub Pages"
+git push origin main
+```
+
+推送后进入 GitHub 仓库页面：
+
+1. 打开 `Settings`。
+2. 点击左侧 `Pages`。
+3. 在 `Build and deployment` 中选择 `Deploy from a branch`。
+4. `Branch` 选择 `main`，目录选择 `/root`。
+5. 保存后等待 1-3 分钟。
+
+也可以用 GitHub CLI 开启 Pages：
+
+```bash
+gh api repos/Ethan-a2/personal-show/pages \
+  -X POST \
+  -F 'source[branch]=main' \
+  -F 'source[path]=/'
+```
+
+如果 Pages 已经开启，只需要推送文件并等待重新构建即可。
+
 ## 编辑简历
 
 主要编辑 `resume.md`。文件顶部的 frontmatter 控制基础信息和主题变量：
