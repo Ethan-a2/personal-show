@@ -33,22 +33,29 @@ http://localhost:8000
 
 ## GitHub Pages 发布
 
-当前项目是纯静态站点，最简单的发布方式是使用 GitHub Pages 的「Deploy from a branch」。
+当前项目是纯静态站点，最稳定的发布方式是使用 GitHub Pages 的「Deploy from a branch」，并把线上内容发布到专用 `gh-pages` 分支。
 
 推荐配置：
 
 - 仓库：`Ethan-a2/personal-show`
-- 分支：`main`
+- 分支：`gh-pages`
 - 目录：`/root`
 - 访问地址：`https://ethan-a2.github.io/personal-show/`
 
 本仓库需要保留 `.nojekyll` 文件，避免 GitHub Pages 用 Jekyll 处理 `resume.md`，否则可能导致 Pages 构建失败。
 
-如果还没有推送 `.nojekyll`，执行：
+如果修改了 `main` 分支内容，执行下面命令把最新静态文件同步到 `gh-pages` 分支：
 
 ```bash
-git add .nojekyll README.md
-git commit -m "Configure GitHub Pages"
+git branch -f gh-pages main
+git push -f origin gh-pages
+```
+
+如果还没有提交 `.nojekyll`，先执行：
+
+```bash
+git add .nojekyll
+git commit -m "Add nojekyll marker"
 git push origin main
 ```
 
@@ -57,19 +64,19 @@ git push origin main
 1. 打开 `Settings`。
 2. 点击左侧 `Pages`。
 3. 在 `Build and deployment` 中选择 `Deploy from a branch`。
-4. `Branch` 选择 `main`，目录选择 `/root`。
+4. `Branch` 选择 `gh-pages`，目录选择 `/root`。
 5. 保存后等待 1-3 分钟。
 
-也可以用 GitHub CLI 开启 Pages：
+也可以用 GitHub CLI 配置 Pages 发布源：
 
 ```bash
 gh api repos/Ethan-a2/personal-show/pages \
-  -X POST \
-  -F 'source[branch]=main' \
+  --method PUT \
+  -F 'source[branch]=gh-pages' \
   -F 'source[path]=/'
 ```
 
-如果 Pages 已经开启，只需要推送文件并等待重新构建即可。
+如果 Pages 已经开启，只需要更新 `gh-pages` 分支并等待重新构建即可。
 
 ## 编辑简历
 
