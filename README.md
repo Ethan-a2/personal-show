@@ -202,7 +202,7 @@ python3 -m http.server 8000
 在 `resume.md` 顶部增加 `avatar` 字段：
 
 ```yaml
-avatar: ./avatar.jpg
+avatar: ./avatar.png
 ```
 
 然后把头像文件放到项目目录中。没有设置 `avatar` 时，会显示一个圆形文字占位头像。

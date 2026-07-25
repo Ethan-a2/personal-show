@@ -10,10 +10,10 @@ github: https://github.com/acmenlei
 blog: yueque.com/xiongleixin
 accent: "#6F4E37"
 text: "#3E3A36"
+avatar: "avatar.png"
 font: Nunito, Inter, "PingFang SC", "Microsoft YaHei", sans-serif
 lineHeight: 22px
 ---
-
 ## 专业技能
 
 - 熟悉 Vue 框架并对其源码有过深入研究，且熟悉 Vue 相关技术栈，并能在项目中进行实际应用
