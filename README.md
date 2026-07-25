@@ -33,50 +33,42 @@ http://localhost:8000
 
 ## GitHub Pages 发布
 
-当前项目是纯静态站点，最稳定的发布方式是使用 GitHub Pages 的「Deploy from a branch」，并把线上内容发布到专用 `gh-pages` 分支。
+当前项目是纯静态站点，GitHub Pages 直接发布 `main` 分支根目录。每次向 `main` 推送新提交后，GitHub Pages 会自动重新构建并更新线上页面，无需手动同步 `gh-pages` 分支。
 
-推荐配置：
+当前配置：
 
 - 仓库：`Ethan-a2/personal-show`
-- 分支：`gh-pages`
+- 分支：`main`
 - 目录：`/root`
 - 访问地址：`https://ethan-a2.github.io/personal-show/`
 
 本仓库需要保留 `.nojekyll` 文件，避免 GitHub Pages 用 Jekyll 处理 `resume.md`，否则可能导致 Pages 构建失败。
 
-如果修改了 `main` 分支内容，执行下面命令把最新静态文件同步到 `gh-pages` 分支：
+修改内容后，正常提交并推送即可触发自动更新：
 
 ```bash
-git branch -f gh-pages main
-git push -f origin gh-pages
-```
-
-如果还没有提交 `.nojekyll`，先执行：
-
-```bash
-git add .nojekyll
-git commit -m "Add nojekyll marker"
+git add .
+git commit -m "Update resume"
 git push origin main
 ```
 
-推送后进入 GitHub 仓库页面：
+如需在 GitHub 网页中确认发布源：
 
 1. 打开 `Settings`。
 2. 点击左侧 `Pages`。
 3. 在 `Build and deployment` 中选择 `Deploy from a branch`。
-4. `Branch` 选择 `gh-pages`，目录选择 `/root`。
-5. 保存后等待 1-3 分钟。
+4. `Branch` 选择 `main`，目录选择 `/root`。
 
 也可以用 GitHub CLI 配置 Pages 发布源：
 
 ```bash
 gh api repos/Ethan-a2/personal-show/pages \
   --method PUT \
-  -F 'source[branch]=gh-pages' \
+  -F 'source[branch]=main' \
   -F 'source[path]=/'
 ```
 
-如果 Pages 已经开启，只需要更新 `gh-pages` 分支并等待重新构建即可。
+推送后可以在仓库的 `Actions` 页面查看 `pages build and deployment` 任务；通常等待几分钟后即可看到最新内容。
 
 ## 编辑简历
 
