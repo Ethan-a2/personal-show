@@ -83,8 +83,8 @@ age: 25岁
 gender: 男
 phone: 185****5387
 email: coderleilei@163.com
-github: https://github.com/acmenlei
-blog: yueque.com/xiongleixin
+github:
+blog:
 accent: "#6F4E37"
 text: "#3E3A36"
 font: Nunito, Inter, "PingFang SC", "Microsoft YaHei", sans-serif
@@ -97,7 +97,9 @@ lineHeight: 22px
 - `title`：简历顶部主标题。
 - `subtitle`：头像占位和辅助标题信息。
 - `experience`、`age`、`gender`、`phone`：顶部基础信息。
-- `email`、`github`、`blog`：顶部联系方式。
+- `email`、`github`、`blog`：顶部联系方式。`github`、`blog` 可省略协议前缀，会自动补全为 `https://`。
+- 以上任一字段留空（或只写空白）时，对应条目不会渲染；联系方式全部为空时整行联系方式隐藏。
+- `avatar`：头像路径，留空时显示 `subtitle` 首字占位。
 - `accent`：主色，当前为深棕色 `#6F4E37`。
 - `text`：正文色，当前为深灰色 `#3E3A36`。
 - `font`：简历字体栈。

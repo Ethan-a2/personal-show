@@ -10,8 +10,8 @@ const defaultMeta = {
   gender: "男",
   phone: "18522225387",
   email: "coderleilei@163.com",
-  github: "https://github.com/acmenlei",
-  blog: "yueque.com/xiongleixin",
+  github: "",
+  blog: "",
   accent: "#6F4E37",
   text: "#3E3A36",
   font: 'Nunito, Inter, "PingFang SC", "Microsoft YaHei", sans-serif',
@@ -75,15 +75,22 @@ function applyTheme(meta) {
 }
 
 function renderHeader(meta) {
-  const headline = [meta.experience, meta.age, meta.gender, meta.phone].filter(Boolean).join(" / ");
+  const headline = [meta.experience, meta.age, meta.gender, meta.phone]
+    .map(normalizeText)
+    .filter(Boolean)
+    .join(" / ");
   const contactItems = [
     { icon: "☎", label: headline },
-    { icon: "✉", label: meta.email, href: `mailto:${meta.email}` },
-    { icon: "◑", label: meta.github, href: meta.github },
+    { icon: "✉", label: meta.email, href: `mailto:${normalizeText(meta.email)}` },
+    { icon: "◑", label: meta.github, href: normalizeUrl(meta.github) },
     { icon: "◒", label: meta.blog, href: normalizeUrl(meta.blog) },
-  ];
+  ].filter((item) => normalizeText(item.label));
 
-  const avatar = meta.avatar
+  const contactGrid = contactItems.length
+    ? `<div class="contact-grid">${contactItems.map(renderContactItem).join("")}</div>`
+    : "";
+
+  const avatar = normalizeText(meta.avatar)
     ? `<img src="${escapeAttribute(meta.avatar)}" alt="${escapeAttribute(meta.subtitle)}头像" />`
     : escapeHtml((meta.subtitle || meta.title).slice(0, 1));
 
@@ -91,9 +98,7 @@ function renderHeader(meta) {
     <header class="resume-header">
       <div>
         <h1 class="resume-title">${escapeHtml(meta.title)}</h1>
-        <div class="contact-grid">
-          ${contactItems.map(renderContactItem).join("")}
-        </div>
+        ${contactGrid}
       </div>
       <div class="avatar" aria-hidden="true">${avatar}</div>
     </header>
@@ -101,17 +106,23 @@ function renderHeader(meta) {
 }
 
 function renderContactItem(item) {
-  if (!item.label) return "";
-  const label = escapeHtml(item.label);
+  const labelText = normalizeText(item.label);
+  if (!labelText) return "";
+  const label = escapeHtml(labelText);
   const content = item.href
     ? `<a href="${escapeAttribute(item.href)}" target="_blank" rel="noreferrer">${label}</a>`
     : `<span>${label}</span>`;
   return `<div class="contact-item"><span class="contact-icon">${item.icon}</span>${content}</div>`;
 }
 
+function normalizeText(value) {
+  return value == null ? "" : String(value).trim();
+}
+
 function normalizeUrl(value) {
-  if (!value) return "";
-  return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  const text = normalizeText(value);
+  if (!text) return "";
+  return /^https?:\/\//i.test(text) ? text : `https://${text}`;
 }
 
 function renderMarkdown(markdown) {
